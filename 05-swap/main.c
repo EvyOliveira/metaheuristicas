@@ -5,24 +5,28 @@
 #define TRUE 1
 #define FALSE 0
 
+/* 1º Definição de uma estrutura representando matriz */
 struct matriz {
     int numero_elementos;
     int** elementos;
 };
 
+/* 2º Definição de uma estrutura representando o nodo para construção aleatória */
 struct nodo {
     int indice;
-    int valor;
+    int valor; /* Custo da aresta */
 };
 
 void ler_arquivo(struct matriz*, char*);
 int calcular_custo(struct matriz, int*);
+/* 3º Relacionado à construção gulosa */
 void construir_caminho(struct matriz, int*);
+/* 4º Relacionado à construção do caminho aleatório */
 void construir_caminho_aleatorio(struct matriz, int*);
 
 void realizar_movimento_troca(struct matriz, int*, int*);
 void copiar_caminho(struct matriz, int*, int*);
-
+/* 5º Explicação Imprimir Caminho */
 void imprimir_caminho(int, int*);
 
 void imprimir_matriz(struct matriz);
@@ -30,7 +34,7 @@ void linha();
 
 int main(int argc, char *argv[]) {
     struct matriz m;
-
+    /* 6º Leitura de arquivo com 10 elementos e o valor conhecido será 25 */
     ler_arquivo(&m, "/Users/gleissonassis/Dropbox/CH/instancias/10_01_25.txt");
     imprimir_matriz(m);
 
@@ -41,6 +45,7 @@ int main(int argc, char *argv[]) {
     int custo_solucao_inicial = calcular_custo(m, solucao_inicial);
     printf("Custo solução inicial gulosa: %d\n", custo_solucao_inicial);
 
+    /* 11º Estratégica gulosa do vizinho mais próximo */
     int* melhor_vizinho = malloc((m.numero_elementos + 1) * sizeof(int));
     realizar_movimento_troca(m, solucao_inicial, melhor_vizinho);
     printf("Solucao melhor vizinho: ");
@@ -87,6 +92,7 @@ void realizar_movimento_troca(struct matriz m, int* solucao_inicial, int* melhor
 }
 
 //-----------------------------------------------------------------------------
+/* 7º Através de ponteiros, lerá a quantidade de elementos da matriz */
 
 void ler_arquivo(struct matriz* m, char* arquivo) {
     FILE* fp = fopen(arquivo, "r");
@@ -107,6 +113,7 @@ void ler_arquivo(struct matriz* m, char* arquivo) {
 }
 
 //-----------------------------------------------------------------------------
+/* 9º Calcularaá custo da aresta */
 
 int calcular_custo(struct matriz m, int* caminho) {
     int custo = 0;
@@ -119,6 +126,7 @@ int calcular_custo(struct matriz m, int* caminho) {
 }
 
 //-----------------------------------------------------------------------------
+/* 8º Definirá o caminho usando o menor valor da aresta do dodecaedro */
 
 void construir_caminho(struct matriz m, int* caminho) {
     int *inseridos = malloc(m.numero_elementos * sizeof(int));
@@ -153,6 +161,7 @@ void construir_caminho(struct matriz m, int* caminho) {
 
 
 //-----------------------------------------------------------------------------
+/* 10º Definirá o caminho randomicamente dentro de opções possíveis */
 
 void construir_caminho_aleatorio(struct matriz m, int* caminho) {
     int *inseridos = malloc(m.numero_elementos * sizeof(int));
@@ -190,7 +199,7 @@ void construir_caminho_aleatorio(struct matriz m, int* caminho) {
 }
 
 //-----------------------------------------------------------------------------
-
+/* Impressão da matriz para analisar as possibilidades */
 void imprimir_matriz(struct matriz m) {
     linha();
     printf("Matriz\n\n");
@@ -207,7 +216,7 @@ void imprimir_matriz(struct matriz m) {
 }
 
 //-----------------------------------------------------------------------------
-
+/* Impressão do caminho escolhido */
 void imprimir_caminho(int n, int* caminho) {
     int i;
 
@@ -218,7 +227,7 @@ void imprimir_caminho(int n, int* caminho) {
 }
 
 //-----------------------------------------------------------------------------
-
+/* Separação de caracteres */
 void linha() {
     int i;
     printf("\n");
